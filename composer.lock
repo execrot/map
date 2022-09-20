@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8eaa5fa40ae4176fff197361b4807acc",
+    "content-hash": "41f7e873eedbee509639a36308d2f3ba",
     "packages": [
         {
             "name": "light/model",

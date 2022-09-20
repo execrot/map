@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Light\\System\\": "src/"
+      "Light\\Map\\": "src/"
     }
   }
 }

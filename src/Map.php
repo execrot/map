@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Light;
+namespace Light\Map;
 
 use Closure;
 use Light\Model\Driver\Mongodb\Cursor;
