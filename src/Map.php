@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Light\Map;
 
+use Iterator;
+use ArrayAccess; 
 use Closure;
-use Light\Model\Driver\Mongodb\Cursor;
-use Light\Model\Model;
-use Light\Model\ModelInterface;
 
 /**
  * Class Map
@@ -44,26 +43,30 @@ class Map
   }
 
   /**
-   * @param ModelInterface|Cursor|array $data
+   * @param ArrayAccess|array $data
    * @return bool
    */
-  private static function isSingle(ModelInterface|Cursor|array $data): bool
+  private static function isSingle(ArrayAccess|array $data): bool
   {
-    return $data instanceof ModelInterface
-      || (!isset($data[0]) && !($data instanceof Cursor));
+
+    return !isset($data[0]);
+
+    var_dump($data instanceof ArrayAccess || !isset($data[0])); die();
+
+    return $data instanceof ArrayAccess || !isset($data[0]);
   }
 
   /**
-   * @param ModelInterface|Cursor|array $data
+   * @param ArrayAccess|array $data
    * @param array $mapper
    * @param array|null $userData
    *
    * @return array|null
    */
   private static function executeAssoc(
-    ModelInterface|Cursor|array $data,
-    array                       $mapper,
-    array                       $userData = null
+    ArrayAccess|array $data,
+    array             $mapper,
+    array             $userData = null
   ): ?array
   {
     if (self::isSingle($data)) {
@@ -153,16 +156,7 @@ class Map
       return $value($data, $userData ?: []);
     }
 
-    if ($data instanceof Model) {
-      return $data->getMeta()->hasProperty($value)
-        ? $data->{$value}
-        : $data->{$dest};
-    }
-
-    if (is_array($data)) {
-      return $data[$value] ?? $data[$dest];
-    }
-
-    return null;
+    return $data[$value]
+      ?? $data[$dest] ?? null;
   }
 }
