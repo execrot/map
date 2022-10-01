@@ -43,17 +43,15 @@ class Map
   }
 
   /**
-   * @param ArrayAccess|array $data
+   * @param Countable|ArrayAccess|array $data
    * @return bool
    */
-  private static function isSingle(ArrayAccess|array $data): bool
+  private static function isSingle(Countable|ArrayAccess|array $data): bool
   {
-
-    return !isset($data[0]);
-
-    var_dump($data instanceof ArrayAccess || !isset($data[0])); die();
-
-    return $data instanceof ArrayAccess || !isset($data[0]);
+    if (is_array($data)) {
+      return !isset($data[0]);
+    }
+    return !(class_implements($data)[\Countable::class] ?? false);
   }
 
   /**
@@ -72,7 +70,6 @@ class Map
     if (self::isSingle($data)) {
       return self::executeSingle($data, $mapper, $userData);
     }
-
     $mapped = [];
     foreach ($data as $row) {
       $mapped[] = self::executeSingle($row, $mapper, $userData);
